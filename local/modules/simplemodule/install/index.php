@@ -1,7 +1,8 @@
 <?
 include_once(dirname(__DIR__).'/lib/main.php');
 // Не подключается?
-include_once(dirname(__DIR__).'/lib/orm.php');
+//include_once(dirname(__DIR__).'/lib/orm.php');
+
 
 use \Bitrix\Main\Entity\Base;
 use \Bitrix\Main\Localization\Loc;
@@ -10,7 +11,7 @@ use \SimpleModule\Orm13\Main;
 
 Loc::loadMessages(__FILE__);
 
-Class simpleModule extends CModule
+Class simplemodule extends CModule
 {
     var $MODULE_ID = "simplemodule";
     var $HIGHLOADBLOCK_NAME = "MyTbl";
@@ -35,13 +36,13 @@ Class simpleModule extends CModule
 
     function InstallDB()
     {
-        //if(\Bitrix\Main\Loader::includeModule("simplemodule")){
+        if(\Bitrix\Main\Loader::includeModule("simplemodule")){
             $connection = \Bitrix\Main\Application::getConnection();
 
-            if(!$connection->isTableExists(\SimpleModule\Orm13\OrmTable::getTableName())) {
-                Base::getInstance('\SimpleModule\Orm13\OrmTable')->createDbTable();
+            if(!$connection->isTableExists(SimpleModule\Orm13\OrmTable::getTableName())) {
+                Base::getInstance('SimpleModule\Orm13\OrmTable')->createDbTable();
             }
-        //}
+        }
     }
 
     function UnInstallDB()
@@ -141,12 +142,12 @@ Class simpleModule extends CModule
         global $APPLICATION;
         if(Main::isVersionD7())
         {
+            RegisterModule(Main::MODULE_ID);
             $this->InstallFiles();
             $this->InstallDB();
             $this->InstallEvents();
             $this->InstallHLBlock();
             $this->InstallAgent();
-            RegisterModule(Main::MODULE_ID);
         }
         else
         {
@@ -159,11 +160,11 @@ Class simpleModule extends CModule
     function DoUninstall()
     {
         UnRegisterModule(Main::MODULE_ID);
+        $this->UnInstallAgent();
+        $this->UnInstallHLBlock();
         $this->UnInstallEvents();
         $this->UnInstallDB();
         $this->UnInstallFiles();
-        $this->UnInstallHLBlock();
-        $this->UnInstallAgent();
     }
 
 }

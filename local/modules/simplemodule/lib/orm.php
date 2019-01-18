@@ -17,7 +17,8 @@ class OrmTable extends Entity\DataManager
                 'primary' => true,
                 'autocomplete' => true
             )),
-            new Entity\DateField('DATE'),
+            //new Entity\DateField('DATE'),
+            new Entity\StringField('DATE'),
             new Entity\StringField('SOURCE', array(
                 'required' => true,
             )),

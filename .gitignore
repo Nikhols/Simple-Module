@@ -1,8 +1,5 @@
 #Exclude all of core files
 /bitrix/*
-!/bitrix/modules/
-/bitrix/modules/*
-!/bitrix/modules/simplemodule
 
 #But not the templates and non bitrix components
 !/bitrix/templates
